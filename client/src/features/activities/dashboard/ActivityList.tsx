@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 
@@ -7,9 +7,17 @@ interface Props {
 	selectActivity: (id: string) => void;
 	closeForm: () => void;
 	deleteActivity: (id: string) => void;
+	submitting: boolean;
 }
 
 export default function ActivityList(props: Props) {
+	const [target, setTarget] = useState("");
+
+	function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+		setTarget(e.currentTarget.name);
+		props.deleteActivity(id);
+	}
+
 	return (
 		<Segment>
 			<Item.Group divided>
@@ -35,7 +43,9 @@ export default function ActivityList(props: Props) {
 									color="blue"
 								/>
 								<Button
-									onClick={() => props.deleteActivity}
+									name={activity.id}
+									loading={props.submitting && target === activity.id}
+									onClick={(e) => handleActivityDelete(e, activity.id)}
 									floated="right"
 									content="Delete"
 									color="red"
