@@ -1,16 +1,13 @@
+import { observer } from "mobx-react-lite";
 import React, { ChangeEvent, useState } from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-	activity: Activity | undefined;
-	closeForm: () => void;
-	createOrEdit: (activity: Activity) => void;
-	submitting: boolean;
-}
+export default observer(function ActivityForm() {
+	const { activityStore } = useStore();
+	const { selectedActivity, closeForm, createActivity, updateActivity, loading } = activityStore;
 
-export default function ActivityForm(props: Props) {
-	const initialState = props.activity ?? {
+	const initialState = selectedActivity ?? {
 		id: "",
 		title: "",
 		category: "",
@@ -20,10 +17,10 @@ export default function ActivityForm(props: Props) {
 		venue: "",
 	};
 
-	const [activity, setActivity] = useState<Activity>(initialState);
+	const [activity, setActivity] = useState(initialState);
 
 	function handleSubmit() {
-		props.createOrEdit(activity);
+		activity.id ? updateActivity(activity) : createActivity(activity);
 	}
 
 	function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -36,51 +33,44 @@ export default function ActivityForm(props: Props) {
 			<Form onSubmit={handleSubmit} autoComplete="off">
 				<Form.Input
 					placeholder="Title"
-					value={props.activity?.title}
-					onChange={handleInputChange}
+					value={activity.title}
 					name="title"
+					onChange={handleInputChange}
 				/>
 				<Form.TextArea
 					placeholder="Description"
-					value={props.activity?.title}
-					onChange={handleInputChange}
+					value={activity.description}
 					name="description"
+					onChange={handleInputChange}
 				/>
 				<Form.Input
 					placeholder="Category"
-					value={props.activity?.category}
-					onChange={handleInputChange}
+					value={activity.category}
 					name="category"
+					onChange={handleInputChange}
 				/>
 				<Form.Input
 					type="date"
 					placeholder="Date"
-					value={props.activity?.date}
-					onChange={handleInputChange}
+					value={activity.date}
 					name="date"
+					onChange={handleInputChange}
 				/>
 				<Form.Input
 					placeholder="City"
-					value={props.activity?.city}
-					onChange={handleInputChange}
+					value={activity.city}
 					name="city"
+					onChange={handleInputChange}
 				/>
 				<Form.Input
 					placeholder="Venue"
-					value={props.activity?.venue}
-					onChange={handleInputChange}
+					value={activity.venue}
 					name="venue"
+					onChange={handleInputChange}
 				/>
-
-				<Button floated="right" positive type="submit" content="Submit" />
-				<Button
-					loading={props.submitting}
-					onClick={props.closeForm}
-					floated="right"
-					type="button"
-					content="Cancel"
-				/>
+				<Button loading={loading} floated="right" positive type="submit" content="Submit" />
+				<Button onClick={closeForm} floated="right" type="button" content="Cancel" />
 			</Form>
 		</Segment>
 	);
-}
+});
