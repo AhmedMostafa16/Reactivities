@@ -10,13 +10,9 @@ export default function NavBar() {
 					<img src="/assets/logo.png" alt="logo" style={{ marginLeft: "12px" }} />
 					<strong>Reactivities</strong>
 				</Menu.Item>
-				<Menu.Item name="Activities" as={NavLink} to="/activities"/>
+				<Menu.Item name="Activities" as={NavLink} to="/activities" />
 				<Menu.Item>
-					<Button
-						as={NavLink} to="/createActivity"
-						positive
-						content="Create Activity"
-					/>
+					<Button as={NavLink} to="/createActivity" positive content="Create Activity" />
 				</Menu.Item>
 			</Container>
 		</Menu>

@@ -10,10 +10,10 @@ function App() {
 	const location = useLocation();
 
 	return (
-		<>
+		<Routes>
 			<Route path="/" element={<HomePage />} />
 			<Route
-				path={"(.+)"}
+				path={"*"}
 				element={
 					<>
 						<NavBar />
@@ -35,7 +35,7 @@ function App() {
 					</>
 				}
 			/>
-		</>
+		</Routes>
 	);
 }
 
