@@ -9,6 +9,7 @@ import TestErrors from "../../features/errors/TestErrors";
 import { ToastContainer } from "react-toastify";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
+import ActivityDetails from "../../features/activities/details/ActivityDetails";
 
 function App() {
 	const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
 							<Container style={{ marginTop: "7em" }}>
 								<Routes>
 									<Route path="activities" element={<ActivityDashboard />} />
+									<Route path="activities/:id" element={<ActivityDetails />} />
 									<Route
 										key={location.key}
 										path="createActivity"
