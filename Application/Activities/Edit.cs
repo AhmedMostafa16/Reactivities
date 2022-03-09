@@ -38,7 +38,7 @@ public class Edit
             var activity = await _context.Activities.FindAsync(request.Activity.Id);
 
             if (activity == null) return null;
-            
+
             _mapper.Map(request.Activity, activity);
             bool result = await _context.SaveChangesAsync().ConfigureAwait(false) > 0;
 
